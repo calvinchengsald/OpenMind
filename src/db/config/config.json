@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "openmind-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port" : 5432,
+    "logging" : false,
+    "operatorsAliases" : false
+  },
+  "test": {
+    "username": "postgres",
+    "password": null,
+    "database": "openmind-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port" : 5432,
+    "logging" : false,
+    "operatorsAliases" : false
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
