@@ -3,7 +3,6 @@
 const topicQueries = require("../db/queries.topic.js");
 
 
-//const Topic = require("../../src/db/models").Topic;
 
 module.exports = {
   index(req, res, next){
@@ -18,28 +17,20 @@ module.exports = {
       })
   },
   new(req, res, next){
-
-/*
-    Topic.create({
-      title: "JS Frameworks",
-      description: "There is a lot of them"
-    })
-     .then((topic) => {
-
-     })
-     .catch((err) => {
-       console.log(err);
-     });
-     */
-
     res.render("topics/new");
   },
 
   create(req, res, next){
     let newTopic = {
-      title: req.body.title,
-      description: req.body.description
+      title: req.query.title,
+      description: req.query.description
     };
+    /*
+    let newTopic = {
+      title: req.query.title,
+      description: req.query.description
+    };
+    */
     topicQueries.addTopic(newTopic, (err, topic) => {
       if(err){
         res.redirect(500, "/topics/new");
@@ -60,6 +51,8 @@ module.exports = {
    },
 
    destroy(req, res, next){
+
+//     console.log(req.body.title);
      topicQueries.deleteTopic(req.params.id, (err, topic) => {
        if(err){
          res.redirect(500, `/topics/${topic.id}`)
@@ -80,7 +73,8 @@ module.exports = {
     },
 
     update(req, res, next){
-     topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
+     //topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
+     topicQueries.updateTopic(req.params.id, req.query, (err, topic) => {
        if(err || topic == null){
          res.redirect(404, `/topics/${req.params.id}/edit`);
        } else {

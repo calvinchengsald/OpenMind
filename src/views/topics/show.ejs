@@ -11,6 +11,14 @@
       <h1><%= topic.title %></h1>
       <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
       <form style="display:initial" action="/topics/<%= topic.id %>/destroy" method="post">
+
+<!--
+        <div class="form-group">
+          <label for="title">delete handler</label>
+          <input value="<%= topic.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
+        </div>
+-->
+
         <button type="submit" class="btn btn-danger">Delete</button>
       </form>
       <p><%= topic.description %></p>
