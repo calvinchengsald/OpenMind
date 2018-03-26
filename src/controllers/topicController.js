@@ -24,8 +24,8 @@ module.exports = {
 
     /*
     let newTopic = {
-      title: req.query.title,
-      description: req.query.description
+      title: req.body.title,
+      description: req.body.description
     };
     */
 
@@ -33,7 +33,7 @@ module.exports = {
       title: req.query.title,
       description: req.query.description
     };
-    
+
     topicQueries.addTopic(newTopic, (err, topic) => {
       if(err){
         res.redirect(500, "/topics/new");
@@ -76,8 +76,8 @@ module.exports = {
     },
 
     update(req, res, next){
-     //topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
      topicQueries.updateTopic(req.params.id, req.query, (err, topic) => {
+     //topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
        if(err || topic == null){
          res.redirect(404, `/topics/${req.params.id}/edit`);
        } else {

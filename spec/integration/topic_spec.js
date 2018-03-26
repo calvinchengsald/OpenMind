@@ -61,8 +61,8 @@ describe("routes : topics", () => {
      const options = {
        url: `${base}create`,
        form: {
-         title: "blink-182 songs",
-         description: "What's your favorite blink-182 song?"
+         title: "blink-1822 songs",
+         description: "What's your favorite blink-1822 song?"
        }
      };
 
@@ -70,11 +70,11 @@ describe("routes : topics", () => {
     //   request.post(options,(err, res, body) => {
       request.get(`${base}create?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 
-           Topic.findOne({where: {title: "blink-182 songs"}})
+           Topic.findOne({where: {title: "blink-1822 songs"}})
            .then((topic) => {
              //expect(res.statusCode).toBe(303);
-             expect(topic.title).toBe("blink-182 songs");
-             expect(topic.description).toBe("What's your favorite blink-182 song?");
+             expect(topic.title).toBe("blink-1822 songs");
+             expect(topic.description).toBe("What's your favorite blink-1822 song?");
              done();
            })
            .catch((err) => {
@@ -142,7 +142,7 @@ describe("routes : topics", () => {
              description: "There are a lot of them"
            }
          };
-//#1
+//#
       //   request.post(options,(err, res, body) => {
         request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 

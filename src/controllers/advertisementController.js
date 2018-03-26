@@ -28,8 +28,8 @@ module.exports = {
     };
     /*
     let newTopic = {
-      title: req.query.title,
-      description: req.query.description
+      title: req.body.title,
+      description: req.body.description
     };
     */
     advertisementQueries.addAdvertisement(newAdvertisement, (err, advertisement) => {
