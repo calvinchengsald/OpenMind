@@ -49,7 +49,38 @@ module.exports = {
         res.render('advertisement/show', {advertisement});
       }
     })
+  },
+  edit(req,res,next){
+
+    advertisementQueries.getAdvertisement(req.params.id, (err, advertisement)=>{
+      if(err || !advertisement){
+        res.redirect(404, "/advertisement");
+      } else {
+        res.render('advertisement/edit', {advertisement});
+      }
+    })
+
+
+  },
+  update(req,res,next){
+    advertisementQueries.updateAdvertisement(req.params.id,req.query,(err,ad)=>{
+      if(err || !ad){
+        res.redirect(404, `/advertisement/${req.query.id}/edit`);
+      } else {
+        res.redirect(`/advertisement/${req.query.id}`);
+      }
+    });
+  },
+  destroy(req,res, next){
+    advertisementQueries.deleteAdvertisement(req.params.id, (err,ad)=>{
+      if(err){
+        res.redirect(500, `/advertisement/${topic.id}`)
+      } else {
+        res.redirect(303, "/advertisement");
+      }
+    });
   }
+
 
 
 }

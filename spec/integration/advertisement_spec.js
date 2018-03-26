@@ -86,9 +86,9 @@ describe("routes : advertisement", () => {
      });
    });
 
-   describe("GET /topics/:id", () => {
+   describe("GET /advertisement/:id", () => {
 
-     it("should render a view with the selected topic", (done) => {
+     it("should render a view with the selected advertisement", (done) => {
        request.get(`${base}${this.advertisement.id}`, (err, res, body) => {
          expect(err).toBeNull();
          expect(body).toContain("Philly amazing cheesesteak");
@@ -98,6 +98,68 @@ describe("routes : advertisement", () => {
 
    });
 
+
+    describe("POST /advertisement/:id/destroy", () => {
+
+     it("should delete the advertisement with the associated ID", (done) => {
+       Advertisement.all()
+       .then((advertisements) => {
+         const adCountBeforeDelete = advertisements.length;
+         expect(adCountBeforeDelete).toBe(1);
+         request.post(`${base}${this.advertisement.id}/destroy`, (err, res, body) => {
+           Advertisement.all()
+           .then((advertisements) => {
+             expect(err).toBeNull();
+             expect(advertisements.length).toBe(adCountBeforeDelete - 1);
+             done();
+           })
+
+         });
+       });
+     });
+   });
+
+   describe("GET /advertisement/edit?topic", () => {
+
+     it("should render a view with an edit advertisement form", (done) => {
+       request.get(`${base}${this.advertisement.id}/edit`, (err, res, body) => {
+         expect(err).toBeNull();
+         expect(body).toContain("Edit Advertisement");
+         expect(body).toContain("Philly amazing cheesesteak");
+         done();
+       });
+     });
+
+   });
+
+   describe("POST /advertisement/:id/update", () => {
+
+      it("should update the advertisement with the given values", (done) => {
+         const options = {
+            url: `${base}${this.advertisement.id}/update`,
+            form: {
+              title: "Edited add",
+              description: "some edit"
+            }
+          };
+ //#
+       //   request.post(options,(err, res, body) => {
+         request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
+
+
+            expect(err).toBeNull();
+ //#2
+            Advertisement.findOne({
+              where: { id: this.advertisement.id }
+            })
+            .then((advertisement) => {
+              expect(advertisement.title).toBe("Edited add");
+              done();
+            });
+          });
+      });
+
+    });
 
 
 });
