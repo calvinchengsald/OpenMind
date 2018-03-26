@@ -7,5 +7,10 @@ module.exports = {
 
     const topicRoutes = require("../routes/topic");
     app.use(topicRoutes);
+
+
+    const advertisementRoutes = require("../routes/advertisement");
+    app.use(advertisementRoutes);
+
   }
 }

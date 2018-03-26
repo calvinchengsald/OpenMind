@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <main class="container">
+      <% include ../static/partials/navbar.ejs %>
+
+      <h1>Advertisements</h1>
+
+
+      <a href="/advertisement/new">
+        <span class="btn btn-primary">Create</span>
+      </a>
+      <ul class="list-group">
+
+<!-- #1 -->
+        <% advertisements.forEach((advertisement) => { %>
+<!-- #2 -->
+          <li class="list-group-item">
+            <a href="/advertisement/<%= advertisement.id %>"> <%= advertisement.title %> </a>
+          </li>
+        <% }) %>
+      </ul>
+
+    </main>
+  </body>
+</html>

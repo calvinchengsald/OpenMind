@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+      <h1><%= advertisement.title %></h1>
+      <a href="/advertisement/<%= advertisement.id %>/edit" class="btn btn-warning">Edit</a>
+      <form style="display:initial" action="/advertisement/<%= advertisement.id %>/destroy" method="post">
+
+<!--
+        <div class="form-group">
+          <label for="title">delete handler</label>
+          <input value="<%= advertisement.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title222">
+        </div>
+-->
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      <p><%= advertisement.description %></p>
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

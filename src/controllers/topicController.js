@@ -21,6 +21,7 @@ module.exports = {
   },
 
   create(req, res, next){
+
     let newTopic = {
       title: req.query.title,
       description: req.query.description
