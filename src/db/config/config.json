@@ -27,6 +27,6 @@
     "dialect": "postgres",
     "use_env_variable": "DATABASE_URL",
     "logging": false,
-    "operatorsAliases": false,
+    "operatorsAliases": false
   }
 }
