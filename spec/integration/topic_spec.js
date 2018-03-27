@@ -163,13 +163,8 @@ describe("routes : topics", () => {
              description: "There are a lot of them"
            }
          };
-//#
          request.post(options,(err, res, body) => {
-      //  request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
-
-
            expect(err).toBeNull();
-//#2
            Topic.findOne({
              where: { id: this.topic.id }
            })
