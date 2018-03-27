@@ -67,8 +67,8 @@ describe("routes : advertisement", () => {
      };
 
      it("should create a new advertisement and redirect", (done) => {
-    //   request.post(options,(err, res, body) => {
-      request.get(`${base}create?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
+       request.post(options,(err, res, body) => {
+    //  request.get(`${base}create?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 
            Advertisement.findOne({where: {title: "blink-182 ads"}})
            .then((advertisement) => {
@@ -143,8 +143,8 @@ describe("routes : advertisement", () => {
             }
           };
  //#
-       //   request.post(options,(err, res, body) => {
-         request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
+          request.post(options,(err, res, body) => {
+      //   request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 
 
             expect(err).toBeNull();

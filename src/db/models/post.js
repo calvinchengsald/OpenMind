@@ -12,12 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
      topicId: {
        type: DataTypes.INTEGER,
-       allowNull: false,
-       references: {
-         model: "Topics",
-         key: "id",
-         as: "topicId",
-       }
+       allowNull: false
      }
 
   }, {});

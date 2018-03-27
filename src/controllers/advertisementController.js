@@ -23,8 +23,8 @@ module.exports = {
   create(req, res, next){
 
     let newAdvertisement = {
-      title: req.query.title,
-      description: req.query.description
+      title: req.body.title,
+      description: req.body.description
     };
     /*
     let newTopic = {
@@ -63,11 +63,12 @@ module.exports = {
 
   },
   update(req,res,next){
-    advertisementQueries.updateAdvertisement(req.params.id,req.query,(err,ad)=>{
+    //advertisementQueries.updateAdvertisement(req.params.id,req.query,(err,ad)=>{
+    advertisementQueries.updateAdvertisement(req.params.id,req.body,(err,ad)=>{
       if(err || !ad){
-        res.redirect(404, `/advertisement/${req.query.id}/edit`);
+        res.redirect(404, `/advertisement/${req.params.id}/edit`);
       } else {
-        res.redirect(`/advertisement/${req.query.id}`);
+        res.redirect(`/advertisement/${req.params.id}`);
       }
     });
   },

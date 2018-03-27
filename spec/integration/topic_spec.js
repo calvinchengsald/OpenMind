@@ -67,12 +67,12 @@ describe("routes : topics", () => {
      };
 
      it("should create a new topic and redirect", (done) => {
-    //   request.post(options,(err, res, body) => {
-      request.get(`${base}create?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
+       request.post(options,(err, res, body) => {
+    //  request.get(`${base}create?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 
            Topic.findOne({where: {title: "blink-1822 songs"}})
            .then((topic) => {
-             //expect(res.statusCode).toBe(303);
+             expect(res.statusCode).toBe(303);
              expect(topic.title).toBe("blink-1822 songs");
              expect(topic.description).toBe("What's your favorite blink-1822 song?");
              done();
@@ -143,8 +143,8 @@ describe("routes : topics", () => {
            }
          };
 //#
-      //   request.post(options,(err, res, body) => {
-        request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
+         request.post(options,(err, res, body) => {
+      //  request.get(`${options.url}/?title=${options.form.title}&description=${options.form.description}`, (err, res, body) => {
 
 
            expect(err).toBeNull();

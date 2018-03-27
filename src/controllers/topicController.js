@@ -30,8 +30,8 @@ module.exports = {
     */
 
     let newTopic = {
-      title: req.query.title,
-      description: req.query.description
+      title: req.body.title,
+      description: req.body.description
     };
 
     topicQueries.addTopic(newTopic, (err, topic) => {
@@ -45,7 +45,9 @@ module.exports = {
 
   show(req, res, next){
      topicQueries.getTopic(req.params.id, (err, topic) => {
+
        if(err || topic == null){
+         console.log(err);
          res.redirect(404, "/");
        } else {
          res.render("topics/show", {topic});
@@ -53,7 +55,7 @@ module.exports = {
      });
    },
 
-   destroy(req, res, next){
+  destroy(req, res, next){
 
 //     console.log(req.body.title);
      topicQueries.deleteTopic(req.params.id, (err, topic) => {
@@ -65,7 +67,7 @@ module.exports = {
      });
    },
 
-   edit(req, res, next){
+  edit(req, res, next){
       topicQueries.getTopic(req.params.id, (err, topic) => {
         if(err || topic == null){
           res.redirect(404, "/");
@@ -73,17 +75,19 @@ module.exports = {
           res.render("topics/edit", {topic});
         }
       });
-    },
+  },
 
-    update(req, res, next){
-     topicQueries.updateTopic(req.params.id, req.query, (err, topic) => {
-     //topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
+  update(req, res, next){
+     //topicQueries.updateTopic(req.params.id, req.query, (err, topic) => {
+     topicQueries.updateTopic(req.params.id, req.body, (err, topic) => {
        if(err || topic == null){
          res.redirect(404, `/topics/${req.params.id}/edit`);
        } else {
          res.redirect(`/topics/${topic.id}`);
        }
      });
-   }
+  },
+
+
 
 }
