@@ -23,7 +23,18 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      /*
+      flairId: {
+         type: Sequelize.INTEGER,
+         allowNull: true,
+         references: {        // association information
+           model: "Flairs",   // table name
+           key: "id",         // attribute to use
+           as: "flairId"      // reference as topicId
+         },
+       }
+       */
     });
   },
   down: (queryInterface, Sequelize) => {

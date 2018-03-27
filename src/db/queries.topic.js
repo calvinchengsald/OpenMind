@@ -16,10 +16,13 @@ module.exports = {
 
   getTopic(id, callback){
      return Topic.findById(id, {
-      include: [{
-        model: Post,
-        as: "posts"
-      }]
+      include: [
+        {
+          model: Post,
+          as: "posts"
+        }
+
+      ]
     })
 
      .then((topic) => {

@@ -4,7 +4,7 @@ const advertisementQueries = require("../db/queries.advertisement.js");
 
 module.exports = {
   index(req, res, next){
-    advertisementQueries.getAllTopics( (err, advertisements)=>{
+    advertisementQueries.getAllAdvertisement( (err, advertisements)=>{
 
         if(err){
           console.log(err);
@@ -75,7 +75,7 @@ module.exports = {
   destroy(req,res, next){
     advertisementQueries.deleteAdvertisement(req.params.id, (err,ad)=>{
       if(err){
-        res.redirect(500, `/advertisement/${topic.id}`)
+        res.redirect(500, `/advertisement/${ad.id}`)
       } else {
         res.redirect(303, "/advertisement");
       }

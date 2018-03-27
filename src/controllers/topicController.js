@@ -1,18 +1,28 @@
 
 
 const topicQueries = require("../db/queries.topic.js");
+const flairQueries = require("../db/queries.flair.js");
 
 
 
 module.exports = {
   index(req, res, next){
     topicQueries.getAllTopics((err, topics) => {
-
 //#3
         if(err){
+          console.log(err);
           res.redirect(500, "static/index");
         } else {
           res.render("topics/index", {topics});
+          /*
+          flairQueries.getAllFlairs((err,flairs) =>{
+            if(err){
+              res.redirect(500, "static/index");
+            } else {
+              res.render("topics/index", {topics}, {flairs});
+            }
+          });
+          */
         }
       })
   },
