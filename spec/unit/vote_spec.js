@@ -99,6 +99,22 @@ describe("Vote", () => {
        done();
      });
    });
+   it("should not create an vote on a post for a non 1,-1 value", (done) => {
+     Vote.create({
+       value: 3,
+       postId: this.post.id,
+       userId: this.user.id
+     })
+     .then((vote) => {
+       done();
+
+     })
+     .catch((err) => {
+       expect(err.message).toContain("Validation error");
+       //console.log(err);
+       done();
+     });
+   });
 
    it("should not create a vote without assigned post or user", (done) => {
      Vote.create({

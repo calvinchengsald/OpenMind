@@ -6,6 +6,8 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
+
 
 describe("routes : posts", () => {
 
@@ -581,6 +583,43 @@ describe("routes : posts", () => {
       });
 
     });
+
+/*
+    describe("#getPoints()", () => {
+
+
+      it("should get the total points of the post", (done) => {
+        const options = {
+          url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+        };
+        request.get(options,
+          (err, res, body) => {
+            Vote.findOne({
+              where: {
+                userId: this.currentUser.id,
+                postId: this.post.id
+              }
+            })
+            .then((vote) => {               // confirm that an upvote was created
+
+              expect(this.post.getPoints()).toBe(1);
+              expect(vote).not.toBeNull();
+              expect(vote.value).toBe(1);
+              expect(vote.userId).toBe(this.user.id);
+              expect(vote.postId).toBe(this.post.id);
+              expect(this.post.getPoints()).toBe(1);
+              done();
+            })
+            .catch((err) => {
+              console.log(err);
+              done();
+            });
+          }
+        );
+      });
+
+    });
+*/
 
 
 

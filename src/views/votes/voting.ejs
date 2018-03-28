@@ -5,7 +5,8 @@
     <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/upvote">&#9650;</a>
   </div>
 <!-- #3 -->
-    <b><%= post.getPoints() %></b>
+    <b><%= post.getPoints() %> <%= post.hasUpvoteFor(currentUser.id) %></b>
+
   <div>
 <!-- #4 -->
     <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/downvote">&#9660;</a>

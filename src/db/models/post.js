@@ -47,6 +47,26 @@ module.exports = (sequelize, DataTypes) => {
       .map((v) => { return v.value })
       .reduce((prev, next) => { return prev + next });
   };
+  Post.prototype.hasUpvoteFor = function(userId){
+    let ultimateBool = false;
+    this.votes.map((vote, index) => {
+      if(vote.userId === userId && vote.value===1){
+        ultimateBool = true;
+        return true;
+      }
+    });
+    return ultimateBool;
+  };
+  Post.prototype.hasDownvoteFor = function(userId){
+    let ultimateBool = false;
+    this.votes.map((vote, index) => {
+      if(vote.userId === userId && vote.value===-1){
+        ultimateBool = true;
+        return true;
+      }
+    });
+    return ultimateBool;
+  }
 
 
   return Post;

@@ -133,6 +133,49 @@ describe("routes : votes", () => {
           }
         );
       });
+      it("should not create an upvote twice", (done) => {
+        const options = {
+          url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+        };
+        Vote.all()
+        .then((votes) =>{
+          const voteCountBefore = votes.length;
+          request.get(options,
+            (err, res, body) => {
+              Vote.findOne({
+                where: {
+                  userId: this.user.id,
+                  postId: this.post.id
+                }
+              })
+              .then((vote) => {               // confirm that an upvote was created
+                expect(vote).not.toBeNull();
+                expect(vote.value).toBe(1);
+                expect(vote.userId).toBe(this.user.id);
+                expect(vote.postId).toBe(this.post.id);
+                request.get(options,
+                  (err, res, body) => {
+                    Vote.all()
+                    .then((votes) => {               // confirm that an upvote was created
+                      expect(votes.length).toBe(voteCountBefore+1);
+                      done();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      done();
+                    });
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+          });
+
+
+        })
+
+      });
     });
 
     describe("GET /topics/:topicId/posts/:postId/votes/downvote", () => {
@@ -164,7 +207,7 @@ describe("routes : votes", () => {
         );
       });
     });
-    
+
   }); //end context for signed in user
 
 

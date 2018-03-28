@@ -2,6 +2,7 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
 
 describe("Unit Post Spec", () => {
 
@@ -153,6 +154,130 @@ describe("Unit Post Spec", () => {
     });
 
   });
+
+  describe("#getPoints()", () => {
+
+
+    it("should get the total points of the post", (done) => {
+
+      Vote.create({
+        value: 1,
+        userId: this.user.id,
+        postId: this.post.id,
+      })
+      .then((vote)=>{
+        Post.findById(this.post.id, {
+           include: [
+              {model: Vote, as: "votes"}
+            ]
+        })
+        .then((post)=>{
+            expect(post.getPoints()).toBe(1);
+            done();
+        })
+        .catch((err)=>{
+          console.log(err);
+          done();
+        })
+
+      })
+      .catch((err)=>{
+        console.log(err);
+        done();
+      })
+    });
+
+  });
+
+  describe("#hasUpvoteFor()", () => {
+
+
+    it("should return if a user have upVoted on the post", (done) => {
+
+      Post.findById(this.post.id, {
+         include: [
+            {model: Vote, as: "votes"}
+          ]
+      })
+      .then((post)=>{
+          expect(post.hasUpvoteFor(this.user.id)).toBe(false);
+          Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id,
+          })
+          .then((vote)=>{
+            expect(vote).not.toBeNull();
+            Post.findById(this.post.id, {
+               include: [
+                  {model: Vote, as: "votes"}
+                ]
+            })
+            .then((post2)=>{
+              expect(post2.hasUpvoteFor(this.user.id)).toBe(true);
+              done();
+            })
+            .catch((err)=>{
+              console.log(err);
+              done();
+            })
+
+          })
+          .catch((err)=>{
+            console.log(err);
+            done();
+          })
+      })
+      .catch((err)=>{
+        console.log(err);
+        done();
+      })
+    });
+    it("should return if a user have downVoted on the post", (done) => {
+
+      Post.findById(this.post.id, {
+         include: [
+            {model: Vote, as: "votes"}
+          ]
+      })
+      .then((post)=>{
+          expect(post.hasDownvoteFor(this.user.id)).toBe(false);
+          Vote.create({
+            value: -1,
+            userId: this.user.id,
+            postId: this.post.id,
+          })
+          .then((vote)=>{
+            expect(vote).not.toBeNull();
+            Post.findById(this.post.id, {
+               include: [
+                  {model: Vote, as: "votes"}
+                ]
+            })
+            .then((post2)=>{
+              expect(post2.hasDownvoteFor(this.user.id)).toBe(true);
+              done();
+            })
+            .catch((err)=>{
+              console.log(err);
+              done();
+            })
+
+          })
+          .catch((err)=>{
+            console.log(err);
+            done();
+          })
+      })
+      .catch((err)=>{
+        console.log(err);
+        done();
+      })
+    });
+
+  });
+
+
 
 
 });
