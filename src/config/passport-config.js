@@ -15,17 +15,17 @@ module.exports = {
     passport.use(new LocalStrategy({
       usernameField: "email"
     }, (email, password, done) => {
-      console.log("at use passport");
+    //  console.log("at use passport");
       User.findOne({
         where: { email }
       })
       .then((user) => {
         if (!user || !authHelper.comparePass(password, user.password)) {
-          console.log("invalid");
+        //  console.log("invalid");
         //  return done(null, false, { message: "Invalid email or password" });
           return done(null, user);
         }
-        console.log("valid");
+      //  console.log("valid");
         return done(null, user);
       })
     }));

@@ -27,17 +27,17 @@ module.exports = {
   },
   signIn(req, res, next){
 
-    console.log("i am here before!");
+  //  console.log("i am here before!");
     passport.authenticate("local")(req, res, function () {
-      console.log("i am here!");
+//      console.log("i am here!");
       if(!req.user){
         req.flash("notice", "Sign in failed. Please try again.")
         res.redirect("/users/sign_in");
-        console.log("i am here failed!");
+  //      console.log("i am here failed!");
       } else {
         req.flash("notice", "You've successfully signed in!");
         res.redirect("/");
-        console.log("i am here passed!");
+  //      console.log("i am here passed!");
       }
     })
   },

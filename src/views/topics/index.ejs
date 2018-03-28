@@ -7,12 +7,13 @@
     <main class="container">
       <% include ../static/partials/navbar.ejs %>
 
+      <% include ../static/partials/messages.ejs %>
       <h1>Topics</h1>
 
+      <% if(currentUser && currentUser.isAdmin()) { %>
+        <a href="/topics/new" class="btn btn-success">New Topic</a>
+      <% } %>
 
-      <a href="/topics/new">
-        <span class="btn btn-primary">Create</span>
-      </a>
       <ul class="list-group">
 
 <!-- #1 -->
