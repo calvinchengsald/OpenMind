@@ -196,6 +196,44 @@ describe("routes : comments", () => {
 
       });
 
+      it("should not delete the comment belonging to another user", (done) => {
+        User.create({
+          email: "hello@mail.com",
+          password: "verySecurePassword",
+        })
+        .then ((newUser) => {
+          Comment.create({
+            body: "hey, i am a new comment",
+            userId: newUser.id,
+            postId: this.post.id
+          })
+          .then((newComment) =>{
+            Comment.all()
+            .then((comments) => {
+              const commentCountBeforeDelete = comments.length;
+
+              expect(commentCountBeforeDelete).toBe(2);
+
+              request.post(
+               `${base}${this.topic.id}/posts/${this.post.id}/comments/${newComment.id}/destroy`,
+                (err, res, body) => {
+                Comment.all()
+                .then((comments) => {
+                  expect(err).toBeNull();
+                  expect(comments.length).toBe(commentCountBeforeDelete);
+                  done();
+                })
+
+              });
+            })
+          })
+        })
+
+
+
+
+      });
+
     });
 
   }); //end context for signed in user
