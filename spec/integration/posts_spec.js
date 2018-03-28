@@ -186,8 +186,7 @@ describe("routes : posts", () => {
         done();
       });
     });
-
-    describe("GET /topics/:topicId/posts/new", () => {
+/*    describe("GET /topics/:topicId/posts/new", () => {
 
       it("should render a new post form", (done) => {
         request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
@@ -198,6 +197,7 @@ describe("routes : posts", () => {
       });
 
     });
+  */
     describe("POST /topics/:topicId/posts/create", () => {
 
       it("should create a new post and redirect", (done) => {

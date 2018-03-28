@@ -5,6 +5,7 @@ const postRoutes = require("../routes/posts");
 const flairRoutes = require("../routes/flair");
 const userRoutes = require("../routes/users");
 const commentRoutes = require("../routes/comments");
+const voteRoutes = require("../routes/votes");
 
 module.exports = {
   init(app){
@@ -21,6 +22,7 @@ module.exports = {
     app.use(flairRoutes);
     app.use(userRoutes);
     app.use(commentRoutes);
+    app.use(voteRoutes);
 
   }
 }
