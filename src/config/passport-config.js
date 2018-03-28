@@ -15,15 +15,15 @@ module.exports = {
     passport.use(new LocalStrategy({
       usernameField: "email"
     }, (email, password, done) => {
-    //  console.log("at use passport");
+  //    console.log("at use passport");
       User.findOne({
         where: { email }
       })
       .then((user) => {
         if (!user || !authHelper.comparePass(password, user.password)) {
-        //  console.log("invalid");
-        //  return done(null, false, { message: "Invalid email or password" });
-          return done(null, user);
+  //        console.log("invalid");
+          return done(null, false, { message: "Invalid email or password" });
+        //  return done(null, user);
         }
       //  console.log("valid");
         return done(null, user);
@@ -31,10 +31,14 @@ module.exports = {
     }));
 
     passport.serializeUser((user, callback) => {
+
+  //      console.log("serialize");
       callback(null, user.id);
     });
 
     passport.deserializeUser((id, callback) => {
+
+  //      console.log("deserialize");
       User.findById(id)
       .then((user) => {
         callback(null, user);

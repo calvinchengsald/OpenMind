@@ -47,7 +47,15 @@ describe("routes : posts", () => {
   });
 
   describe("non user performing CRUD actions for Topic", () => {
-
+    beforeEach((done) => {    // before each suite in this context
+      request.get({           // mock authentication
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          userId: 0 // flag to indicate mock auth to destroy any session
+        }
+      });
+      done();
+    });
 
     describe("GET /topics/:topicId/posts/new", () => {
 
@@ -60,7 +68,7 @@ describe("routes : posts", () => {
       });
 
     });
-/*
+
     describe("POST /topics/:topicId/posts/create", () => {
 
       it("should not create a new post and redirect", (done) => {
@@ -69,8 +77,6 @@ describe("routes : posts", () => {
           form: {
             title: "Watching snow melt",
             body: "Without a doubt my favoriting things to do besides watching paint dry!",
-            userId: this.user.id,
-            topicId: this.topic.id
           }
         };
         request.post(options,
@@ -88,10 +94,8 @@ describe("routes : posts", () => {
           }
         );
       });
-
-
     });
-*/
+
     describe("GET /topics/:topicId/posts/:id", () => {
        it("should render a view with the selected post", (done) => {
          request.get(`${base}/${this.topic.id}/posts/${this.post.id}`, (err, res, body) => {

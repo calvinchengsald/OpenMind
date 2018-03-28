@@ -29,7 +29,7 @@ module.exports = {
 
   //  console.log("i am here before!");
     passport.authenticate("local")(req, res, function () {
-//      console.log("i am here!");
+  //    console.log("i am here!");
       if(!req.user){
         req.flash("notice", "Sign in failed. Please try again.")
         res.redirect("/users/sign_in");
