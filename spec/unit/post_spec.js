@@ -159,32 +159,40 @@ describe("Unit Post Spec", () => {
 
 
     it("should get the total points of the post", (done) => {
-
-      Vote.create({
-        value: 1,
-        userId: this.user.id,
-        postId: this.post.id,
+      Post.findById(this.post.id, {
+         include: [
+            {model: Vote, as: "votes"}
+          ]
       })
-      .then((vote)=>{
-        Post.findById(this.post.id, {
-           include: [
-              {model: Vote, as: "votes"}
-            ]
-        })
-        .then((post)=>{
-            expect(post.getPoints()).toBe(1);
+      .then((post)=>{
+          expect(post.getPoints()).toBe(1);
+          Vote.create({
+            value: 1,
+            userId: this.user.id,
+            postId: this.post.id,
+          })
+          .then((vote)=>{
+            Post.findById(this.post.id, {
+               include: [
+                  {model: Vote, as: "votes"}
+                ]
+            })
+            .then((post2)=>{
+                expect(post2.getPoints()).toBe(2);
+                done();
+            })
+            .catch((err)=>{
+              console.log(err);
+              done();
+            })
+
+          })
+          .catch((err)=>{
+            console.log(err);
             done();
-        })
-        .catch((err)=>{
-          console.log(err);
-          done();
-        })
+          })
+      })
 
-      })
-      .catch((err)=>{
-        console.log(err);
-        done();
-      })
     });
 
   });
@@ -200,7 +208,7 @@ describe("Unit Post Spec", () => {
           ]
       })
       .then((post)=>{
-          expect(post.hasUpvoteFor(this.user.id)).toBe(false);
+          expect(post.hasUpvoteFor(this.user.id)).toBe(true);
           Vote.create({
             value: 1,
             userId: this.user.id,

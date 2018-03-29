@@ -69,24 +69,28 @@ describe("routes : votes", () => {
          const options = {
            url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
          };
-         request.get(options,
-           (err, res, body) => {
-             Vote.findOne({            // look for the vote, should not find one.
-               where: {
-                 userId: this.user.id,
-                 postId: this.post.id
-               }
-             })
-             .then((vote) => {
-               expect(vote).toBeNull();
-               done();
-             })
-             .catch((err) => {
-               console.log(err);
-               done();
-             });
-           }
-         );
+         Vote.all()
+         .then((votes)=>{
+           const votesBefore = votes.length;
+           request.get(options,
+             (err, res, body) => {
+               Vote.all()
+               .then((votes2)=>{
+                 expect(votes2.length).toBe(votes.length);
+                 done();
+               })
+               .catch((err) => {
+                 console.log(err);
+                 done();
+               });
+             }
+           );
+         })
+         .catch((err) => {
+           console.log(err);
+           done();
+         });
+
        });
 
      });
@@ -95,14 +99,26 @@ describe("routes : votes", () => {
   describe("signed in user voting on a post", () => {
 
     beforeEach((done) => {  // before each suite in this context
-      request.get({         // mock authentication
-        url: "http://localhost:3000/auth/fake",
-        form: {
-          role: "member",     // mock authenticate as member user
-          userId: this.user.id
-        }
-      });
-      done();
+      User.create({
+        email: "hahahaha@tesla.com",
+        password: "Trekkie4lyfe"
+      })
+      .then((res) => {
+        this.currentUser = res;
+        request.get({         // mock authentication
+          url: "http://localhost:3000/auth/fake",
+          form: {
+            role: "member",     // mock authenticate as member user
+            userId: this.currentUser.id,
+            email: this.currentUser.email,
+          }
+        });
+        done();
+      })
+      .catch((err)=>{
+        console.log(err);
+        done();
+      })
     });
 
     describe("GET /topics/:topicId/posts/:postId/votes/upvote", () => {
@@ -115,14 +131,14 @@ describe("routes : votes", () => {
           (err, res, body) => {
             Vote.findOne({
               where: {
-                userId: this.user.id,
+                userId: this.currentUser.id,
                 postId: this.post.id
               }
             })
             .then((vote) => {               // confirm that an upvote was created
               expect(vote).not.toBeNull();
               expect(vote.value).toBe(1);
-              expect(vote.userId).toBe(this.user.id);
+              expect(vote.userId).toBe(this.currentUser.id);
               expect(vote.postId).toBe(this.post.id);
               done();
             })
@@ -156,8 +172,8 @@ describe("routes : votes", () => {
                 request.get(options,
                   (err, res, body) => {
                     Vote.all()
-                    .then((votes) => {               // confirm that an upvote was created
-                      expect(votes.length).toBe(voteCountBefore+1);
+                    .then((votes2) => {               // confirm that an upvote was created
+                      expect(votes2.length).toBe(voteCountBefore+1);
                       done();
                     })
                     .catch((err) => {
@@ -188,14 +204,14 @@ describe("routes : votes", () => {
           (err, res, body) => {
             Vote.findOne({
               where: {
-                userId: this.user.id,
+                userId: this.currentUser.id,
                 postId: this.post.id
               }
             })
             .then((vote) => {               // confirm that a downvote was created
               expect(vote).not.toBeNull();
               expect(vote.value).toBe(-1);
-              expect(vote.userId).toBe(this.user.id);
+              expect(vote.userId).toBe(this.currentUser.id);
               expect(vote.postId).toBe(this.post.id);
               done();
             })
