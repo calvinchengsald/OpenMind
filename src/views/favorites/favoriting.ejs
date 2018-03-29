@@ -1,6 +1,6 @@
 <!-- #1 -->
 <% const favorite = post.getFavoriteFor(currentUser.id) %>
-<% if (favorite) { %>
+<% if (typeof(favorite) != "undefined" && favorite) { %>
  <form style="display: initial;" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/favorites/<%= favorite.id %>/destroy" method="post">
    <button type="submit" class="btn btn-danger">Unfavorite</button>
  </form>
@@ -10,3 +10,15 @@
    <button type="submit" class="btn btn-primary">Favorite</button>
  </form>
 <% } %>
+
+<!--
+<% if ( typeof(flair) != "undefined") { %>
+ <form style="display: initial;" action="/topics/<%= post.topicId %>/posts/<%= post.id %>" method="post">
+   <button type="submit" class="btn btn-danger">HI THIS IS TOPIC</button>
+ </form>
+<% } else { %>
+ <form style="display: initial;" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/favorites/create" method="post">
+   <button type="submit" class="btn btn-primary">hi no topic</button>
+ </form>
+<% } %>
+-->

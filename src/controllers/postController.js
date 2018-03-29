@@ -42,6 +42,10 @@ module.exports = {
           if(err || post == null){
             res.redirect(404, "/");
           } else {
+            if(req.user){
+              post.hasUp = post.hasUpvoteFor(req.user.id);
+              post.hasDown = post.hasDownvoteFor(req.user.id);
+            }
             res.render("posts/show", {post});
           }
         } else {

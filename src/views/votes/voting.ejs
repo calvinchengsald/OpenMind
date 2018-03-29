@@ -2,13 +2,13 @@
 <div class="pull-left" style="width: 40px;text-align: center;">
   <div>
 <!-- #2 -->
-    <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/upvote">&#9650;</a>
+    <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/upvote">&#<%=post.hasUp?9650:9651%>; </a>
   </div>
 <!-- #3 -->
     <b><%= post.getPoints() %> </b>
 
   <div>
 <!-- #4 -->
-    <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/downvote">&#9660;</a>
+    <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/votes/downvote">&#<%=post.hasDown?9660:9661%>;</a>
   </div>
 </div>
