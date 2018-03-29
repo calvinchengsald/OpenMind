@@ -5,10 +5,12 @@
    <p>
      <%= comment.body %>
    </p>
-   <small class="card-subtitle mb-2 text-muted">
-<!-- #2 -->
-     sent by <%= comment.User.email %> on <%= comment.createdAt %>
-   </small>
+   <a class="nav-link" href="/users/<%= comment.User.id %>">
+     <small class="card-subtitle mb-2 text-muted">
+  <!-- #2 -->
+       sent by <%= comment.User.email %> on <%= comment.createdAt %>
+     </small>
+   </a>
 
 <!-- #3 -->
    <% if(currentUser && (currentUser.id === comment.userId || currentUser.isAdmin())) { %>
