@@ -75,8 +75,10 @@ describe("routes : comments", () => {
          form: {
            userId: 0 // flag to indicate mock auth to destroy any session
          }
+       },
+       (err, res, body) => {
+         done();
        });
-       done();
      });
 
      describe("POST /topics/:topicId/posts/:postId/comments/create", () => {
@@ -140,8 +142,10 @@ describe("routes : comments", () => {
           role: "member",     // mock authenticate as member user
           userId: this.user.id
         }
+      },
+      (err, res, body) => {
+        done();
       });
-      done();
     });
 
     describe("POST /topics/:topicId/posts/:postId/comments/create", () => {

@@ -58,8 +58,10 @@ describe("routes : votes", () => {
          form: {
            userId: 0 // ensure no user in scope
          }
-       });
-       done();
+       },
+       (err, res, body) => {
+          done();
+        });
 
      });
 
@@ -112,8 +114,10 @@ describe("routes : votes", () => {
             userId: this.currentUser.id,
             email: this.currentUser.email,
           }
+        },
+        (err, res, body) => {
+          done();
         });
-        done();
       })
       .catch((err)=>{
         console.log(err);

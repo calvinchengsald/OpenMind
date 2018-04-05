@@ -193,8 +193,11 @@ describe("routes : topics", () => {
         form: {
           role: "member"
         }
+      },
+      (err, res, body) => {
+        done();
       });
-      done();
+
     });
     describe("GET /topics", () => {
         it("should return a status code 200 and all topics", (done) => {
